@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goku</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%23f7971e'/><stop offset='100%25' stop-color='%23e44d26'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><text x='50' y='68' text-anchor='middle' font-family='Arial,sans-serif' font-weight='800' font-size='58' fill='white'>G</text><path d='M62 50h12v4H58V38h4v12z' fill='%23ffffffcc'/></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-add: #4CAF50;
+            --color-remove: #f44336;
+            --color-swap: #FF9800;
+            --color-style: #9C27B0;
+            --color-subject: #2196F3;
+            --color-camera: #607D8B;
+            --color-refadd: #00BCD4;
+            --color-refswap: #E91E63;
+            --color-multi: #FF5722;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #1a1a2e;
+            --text-secondary: #555;
+            --border-color: #e8e8e8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans', 'Google Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 70px 20px 50px;
+            background: linear-gradient(135deg, #f7971e 0%, #e44d26 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .hero h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            position: relative;
+            letter-spacing: -0.5px;
+            line-height: 1.25;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(90deg, #fff9c4, #ffe082);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.15rem;
+            font-weight: 500;
+            opacity: 0.92;
+            max-width: 700px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .hero .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 8px 24px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.3);
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        .hero .authors {
+            font-size: 1.08rem;
+            font-weight: 500;
+            letter-spacing: 0.2px;
+            opacity: 0.96;
+            margin: 4px auto 12px;
+            max-width: 820px;
+            line-height: 1.7;
+            position: relative;
+        }
+
+        .hero .authors sup {
+            font-size: 0.62em;
+            font-weight: 600;
+            opacity: 0.92;
+            padding: 0 1px;
+        }
+
+        .hero .affiliations {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 26px;
+            font-size: 0.92rem;
+            font-weight: 400;
+            opacity: 0.82;
+            margin: 0 auto 18px;
+            position: relative;
+        }
+
+        .hero .affiliations span {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+
+        .hero .affiliations sup {
+            font-size: 0.68em;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        .hero .hero-links {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 8px;
+        }
+
+        .hero .hf-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 9px 22px;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.95);
+            color: #1a1a2e;
+            font-size: 0.98rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+            border: 1px solid rgba(255,255,255,0.6);
+            transition: all 0.25s ease;
+        }
+
+        .hero .hf-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 26px rgba(0,0,0,0.28);
+        }
+
+        .hero .hf-logo {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .hero .hero-note {
+            max-width: 720px;
+            margin: 22px auto 0;
+            padding: 16px 18px 14px;
+            border-radius: 10px;
+            background: linear-gradient(180deg, #f7dc50 0%, #e8c73b 100%);
+            border: 1px solid rgba(150, 112, 0, 0.28);
+            box-shadow: 0 8px 22px rgba(96, 52, 0, 0.22);
+            color: #3b3522;
+            font-size: 0.98rem;
+            font-weight: 600;
+            line-height: 1.45;
+            position: relative;
+            text-align: left;
+        }
+
+        .hero .hero-note::before {
+            content: '!';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: linear-gradient(180deg, #f7dc50 0%, #e8c73b 100%);
+            border: 1px solid rgba(150, 112, 0, 0.28);
+            color: #7a6110;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            font-weight: 900;
+            box-shadow: 0 4px 10px rgba(96, 52, 0, 0.18);
+        }
+
+        .hero .hero-note strong {
+            color: #2c2920;
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-right: 6px;
+        }
+
+        .hero .affiliations {
+            font-size: 0.82rem;
+            opacity: 0.7;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .abstract-section {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .abstract-box {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 44px 24px;
+            text-align: justify;
+        }
+
+        .abstract-box h3 {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .abstract-box p {
+            font-size: 0.98rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .abstract-box .keywords {
+            margin-top: 16px;
+            font-size: 0.88rem;
+            color: #e65100;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .divider-title {
+            text-align: center;
+            padding: 56px 20px 28px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #fff3e0 0%, #fbe9e7 50%, #fff8e1 100%);
+            border-bottom: 1px solid #ffe0b2;
+        }
+
+        .divider-title .section-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f7971e, #e44d26);
+            color: white;
+            font-size: 1rem;
+            font-weight: 800;
+            margin: 0 auto 14px;
+            box-shadow: 0 4px 15px rgba(228,77,38,0.35);
+        }
+
+        .divider-title h2 {
+            font-size: 2.1rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #e65100, #bf360c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            margin-bottom: 0;
+        }
+
+        .divider-title .underline {
+            display: block;
+            width: 70px;
+            height: 3px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #f7971e, #e44d26);
+            margin: 10px auto 0;
+        }
+
+        .divider-title p {
+            color: #bf360c;
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 12px auto 0;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation Tabs */
+        .nav-wrapper {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 14px 24px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .nav-tab {
+            padding: 8px 20px;
+            border-radius: 25px;
+            border: 2px solid var(--border-color);
+            background: white;
+            cursor: pointer;
+            font-size: 0.88rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: capitalize;
+            letter-spacing: 0.3px;
+        }
+
+        .nav-tab:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .nav-tab.active {
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .nav-tab[data-cat="add"] { --tab-color: var(--color-add); }
+        .nav-tab[data-cat="remove"] { --tab-color: var(--color-remove); }
+        .nav-tab[data-cat="swap and alter"] { --tab-color: var(--color-swap); }
+        .nav-tab[data-cat="style"] { --tab-color: var(--color-style); }
+        .nav-tab[data-cat="subject"] { --tab-color: var(--color-subject); }
+        .nav-tab[data-cat="camera"] { --tab-color: var(--color-camera); }
+        .nav-tab[data-cat="refadd"] { --tab-color: var(--color-refadd); }
+        .nav-tab[data-cat="refswap"] { --tab-color: var(--color-refswap); }
+        .nav-tab[data-cat="multi"] { --tab-color: var(--color-multi); }
+
+        .nav-tab.active {
+            background: var(--tab-color);
+            border-color: var(--tab-color);
+        }
+
+        .nav-tab:hover {
+            color: var(--tab-color);
+            border-color: var(--tab-color);
+        }
+
+        .nav-tab.active:hover {
+            color: white;
+        }
+
+        /* Section */
+        .section {
+            padding: 60px 0;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 16px auto 0;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 20px;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* Pair Grid */
+        .pair-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(560px, 1fr));
+            gap: 30px;
+        }
+
+        .edit-pair {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .edit-pair:hover {
+            box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+            transform: translateY(-3px);
+        }
+
+        .pair-videos {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            position: relative;
+        }
+
+        .pair-videos.has-ref {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .video-cell {
+            position: relative;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .video-cell video {
+            width: 100%;
+            display: block;
+            aspect-ratio: 16/9;
+            object-fit: contain;
+            background: #000;
+        }
+
+        .video-cell img {
+            width: 100%;
+            display: block;
+            aspect-ratio: 16/9;
+            object-fit: contain;
+            background: #000;
+        }
+
+        .video-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            z-index: 2;
+        }
+
+        .video-label.source {
+            background: rgba(255,255,255,0.92);
+            color: #333;
+        }
+
+        .video-label.edit {
+            background: rgba(230, 81, 0, 0.88);
+            color: white;
+        }
+
+        .video-label.ref {
+            background: rgba(255, 152, 0, 0.92);
+            color: white;
+        }
+
+        .arrow-divider {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+            width: 36px;
+            height: 36px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .arrow-divider svg {
+            width: 18px;
+            height: 18px;
+            fill: #e65100;
+        }
+
+        .pair-info {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pair-index {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .pair-caption {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Multi-turn Section */
+        .multi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .multi-group {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .multi-group:hover {
+            box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+            transform: translateY(-3px);
+        }
+
+        .multi-group-header {
+            padding: 14px 18px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .multi-group-header .step-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .multi-video-list {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .multi-video-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .multi-video-item video {
+            width: 100%;
+            display: block;
+            border-radius: 10px;
+            aspect-ratio: 16/9;
+            object-fit: contain;
+            background: #000;
+        }
+
+        .multi-step-label {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: white;
+            z-index: 2;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero .subtitle { font-size: 1rem; }
+            .pair-grid { grid-template-columns: 1fr; }
+            .multi-grid { grid-template-columns: 1fr; }
+            .nav-tabs { gap: 4px; padding: 10px 12px; }
+            .nav-tab { padding: 6px 14px; font-size: 0.8rem; }
+        }
+
+        @media (max-width: 600px) {
+            .pair-videos { grid-template-columns: 1fr !important; }
+            .arrow-divider { display: none; }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .edit-pair, .multi-group {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        /* ===== Additional Results & Comparison ===== */
+        .full-section {
+            padding: 0 0 60px;
+            position: relative;
+        }
+
+        .full-section > .container {
+            padding-top: 40px;
+        }
+
+        .full-section-header {
+            text-align: center;
+            padding: 56px 20px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .full-section-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 0;
+        }
+
+        .full-section-header .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 14px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .full-section-header h2 {
+            font-size: 2.1rem;
+            font-weight: 800;
+            margin-bottom: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .full-section-header .underline {
+            display: block;
+            width: 70px;
+            height: 3px;
+            border-radius: 2px;
+            margin: 10px auto 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .full-section-header p {
+            font-size: 1.02rem;
+            max-width: 650px;
+            margin: 14px auto 0;
+            padding-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Model Results section */
+        #additionalResults .full-section-header {
+            background: linear-gradient(135deg, #fff8e1 0%, #fff3e0 50%, #fbe9e7 100%);
+            border-bottom: 1px solid #ffe0b2;
+        }
+        #additionalResults .full-section-header .section-number { background: linear-gradient(135deg, #ff8f00, #e65100); }
+        #additionalResults .full-section-header h2 {
+            background: linear-gradient(135deg, #e65100, #bf360c);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        #additionalResults .full-section-header .underline { background: linear-gradient(90deg, #ff8f00, #e65100); }
+        #additionalResults .full-section-header p { color: #a1887f; }
+
+        /* Comparison section */
+        #comparisonSection .full-section-header {
+            background: linear-gradient(135deg, #fbe9e7 0%, #fff3e0 50%, #fff8e1 100%);
+            border-bottom: 1px solid #ffccbc;
+        }
+        #comparisonSection .full-section-header .section-number { background: linear-gradient(135deg, #d84315, #bf360c); }
+        #comparisonSection .full-section-header h2 {
+            background: linear-gradient(135deg, #bf360c, #8d1e00);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        #comparisonSection .full-section-header .underline { background: linear-gradient(90deg, #d84315, #bf360c); }
+        #comparisonSection .full-section-header p { color: #8d6e63; }
+
+        /* Model Results Grid */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(560px, 1fr));
+            gap: 30px;
+        }
+
+        .results-grid-2col {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .instruction-bar {
+            padding: 14px 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .instruction-bar .inst-icon {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f7971e, #e44d26);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1px;
+        }
+
+        .instruction-bar .inst-icon svg {
+            width: 13px;
+            height: 13px;
+            fill: white;
+        }
+
+        .instruction-text {
+            font-size: 0.88rem;
+            font-weight: 600;
+            line-height: 1.5;
+            font-style: italic;
+            color: #c63f17;
+        }
+
+        .result-tags {
+            padding: 0 20px 16px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .result-tag {
+            display: inline-flex;
+            align-items: center;
+            min-height: 30px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            border: 1px solid #d8d1c8;
+            background: #f5f2ee;
+            color: #6b6258;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .result-tag.tag-appearance {
+            border-color: #dccff3;
+            background: #f5efff;
+            color: #7c57b2;
+        }
+
+        .result-tag.tag-multi {
+            border-color: #e7c0b7;
+            background: #fbebe6;
+            color: #b65b47;
+        }
+
+        .result-tag.tag-structural {
+            border-color: #f0cf9d;
+            background: #fff2df;
+            color: #c37a22;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .result-card:hover {
+            box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+            transform: translateY(-3px);
+        }
+
+        .result-card .pair-videos {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            position: relative;
+        }
+
+        .result-card .pair-videos.has-ref {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .result-card .video-area {
+            aspect-ratio: 32/9;
+            overflow: hidden;
+        }
+
+        .result-card .video-area .pair-videos {
+            height: 100%;
+        }
+
+        .result-card .video-area .video-cell {
+            height: 100%;
+        }
+
+        .result-card .video-area video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
+        }
+
+        .result-card .video-area img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
+        }
+
+        /* Comparison Table */
+        .compare-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 10px;
+        }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            min-width: 900px;
+            table-layout: fixed;
+        }
+
+        .compare-table thead th {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            padding: 14px 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            background: white;
+            white-space: nowrap;
+        }
+
+        .compare-table thead th.method-header {
+            min-width: 130px;
+        }
+
+        .compare-table thead th.idx-header {
+            width: 36px;
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+        }
+
+        .compare-table thead th .method-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 20px;
+            color: white;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        .compare-table thead th.ours-header .method-badge {
+            background: linear-gradient(135deg, #f7971e, #e44d26);
+            box-shadow: 0 2px 10px rgba(228,77,38,0.4);
+        }
+
+        .compare-table thead th.source-header .method-badge {
+            background: #424242;
+        }
+
+        .compare-table tbody td.source-cell {
+            background: #fafafa;
+        }
+
+        .compare-table tbody td {
+            padding: 6px;
+            text-align: center;
+            vertical-align: middle;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .compare-table tbody td.idx-cell {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            width: 36px;
+            width: 44px;
+        }
+
+        .compare-table tbody td .compare-video-wrap {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #000;
+            aspect-ratio: 16/9;
+        }
+
+        .compare-table tbody td video {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: contain;
+            background: #000;
+            border-radius: 10px;
+        }
+
+        .compare-table tbody tr:hover td {
+            background: #fff8f0;
+        }
+
+        .compare-table tbody tr.compare-inst-row:hover td {
+            background: transparent;
+        }
+
+        .compare-table tbody td.compare-inst-cell {
+            padding: 4px 10px 12px;
+            border-bottom: 2px solid #f0f0f0;
+            background: transparent;
+        }
+
+        .compare-inst-cell .instruction-bar {
+            border-top: none;
+            justify-content: flex-start;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .compare-inline-tag {
+            min-height: 26px;
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .compare-table tbody td.ours-cell .compare-video-wrap {
+            box-shadow: 0 0 0 2px #e44d26;
+            border-radius: 10px;
+        }
+
+        .compare-select-row {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .compare-select-btn {
+            padding: 6px 18px;
+            border-radius: 20px;
+            border: 2px solid var(--border-color);
+            background: white;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+
+        .compare-select-btn:hover {
+            border-color: #e65100;
+            color: #e65100;
+        }
+
+        .compare-select-btn.active {
+            background: linear-gradient(135deg, #f7971e, #e44d26);
+            color: white;
+            border-color: transparent;
+        }
+
+        @media (max-width: 768px) {
+            .results-grid { grid-template-columns: 1fr; }
+            .results-grid-2col { grid-template-columns: 1fr; }
+            .compare-table { min-width: 700px; }
+            .full-section-header h2 { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== Hero: Title + Authors ===== -->
+<section class="hero">
+    <div class="container">
+        <div class="badge">ECCV 2026</div>
+        <h1><span>Goku</span>: A Million-Scale Universal Dataset and<br>Benchmark for Instruction-Based Video Editing</h1>
+        <p class="authors">
+            Sen Liang<sup>1,2&#8902;</sup>, Cong Wang<sup>2&#8902;</sup>, Zhentao Yu<sup>2</sup>, Fengbin Guan<sup>1</sup>, Zhengguang Zhou<sup>2</sup>, Teng Hu<sup>2</sup>, Youliang Zhang<sup>2</sup>, Yuan Zhou<sup>2</sup>, Xin Li<sup>1</sup>, Qinglin Lu<sup>2</sup>, Zhibo Chen<sup>1&#8224;</sup>
+        </p>
+        <p class="affiliations">
+            <span><sup>1</sup>University of Science and Technology of China</span>
+            <span><sup>2</sup>Tencent Hunyuan</span>
+        </p>
+        <div class="hero-links">
+            <a class="hf-link" href="https://huggingface.co/datasets/bigfacing/GOKU-2M" target="_blank" rel="noopener">
+                <svg class="hf-logo" viewBox="0 0 95 88" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="47.5" cy="42" r="34" fill="#FFD21E"/>
+                    <path d="M81.5 42c0 18.8-15.2 34-34 34S13.5 60.8 13.5 42 28.7 8 47.5 8s34 15.2 34 34z" fill="#FFD21E"/>
+                    <path d="M34 36a4 4 0 100 8 4 4 0 000-8zm27 0a4 4 0 100 8 4 4 0 000-8z" fill="#3A3B45"/>
+                    <path d="M30 53c0 9.7 7.8 17.5 17.5 17.5S65 62.7 65 53c0-2-3-2-7.5-2H37.5C33 51 30 51 30 53z" fill="#3A3B45"/>
+                    <path d="M37.5 51c-4.5 0-7.5 0-7.5 2 0 2.3.5 4.5 1.3 6.5 2-1 4.3-1.6 6.7-1.6 3.7 0 5.6-3.7 5.6-3.7s-1.9-3.2-6.1-3.2z" fill="#fff"/>
+                    <circle cx="22" cy="46" r="5" fill="#FF9D0B" opacity="0.6"/>
+                    <circle cx="73" cy="46" r="5" fill="#FF9D0B" opacity="0.6"/>
+                </svg>
+                <span>Hugging Face</span>
+            </a>
+        </div>
+        <p class="hero-note"><strong>Important</strong> If you notice temporal inconsistency between the original and edited videos, it is usually caused by webpage loading. Please refresh the page and try again. On Windows systems, playback issues may occur due to some unknown issues.</p>
+    </div>
+</section>
+
+<!-- ===== Abstract ===== -->
+<section class="abstract-section">
+    <div class="abstract-box">
+        <h3>Abstract</h3>
+        <p>
+            Existing instruction-based video editing datasets commonly focus on single-task appearance editing, failing to meet the complex creative demands of real-world scenarios. To bridge this gap, we present <strong>Goku</strong>, a large-scale dataset featuring <strong>2 million</strong> high-quality, instruction-aligned video editing pairs, which is the first to extend task boundaries from basic appearance editing to multi-task and structural manipulations (e.g., precise control of subject movement). To tackle the data synthesis challenges inherent in these complex tasks, we design an efficient data synthesis pipeline that decomposes complex edits into controllable sub-problems and introduce a progressive filtering system for data reliability throughout the whole process. Furthermore, we explore the optimal network structures on Goku, and propose <strong>Goku-Edit</strong>. To deeply comprehend complex editing instructions, Goku-Edit leverages an MLLM as its text encoder and adopts a decoupled dual-branch design: a dedicated mask branch handles structural control, freeing the main branch for appearance rendering. A comprehensive video editing benchmark, <strong>Goku-Bench</strong>, is also proposed with 1,000 human-verified test cases and 7 novel editing-specific metrics. Evaluated on Goku-Bench, Goku-Edit obtains up to <strong>+8%</strong> improvement on other open-source models in terms of instruction following.
+        </p>
+        <p class="keywords">Video Editing &bull; Dataset &bull; Benchmark &bull; Instruction Following &bull; Multi-Task Editing</p>
+    </div>
+</section>
+
+<!-- ===== Part 1: Dataset Samples ===== -->
+<div class="divider-title" id="datasetSection">
+    <span class="section-number">1</span>
+    <h2>Dataset Samples</h2>
+    <span class="underline"></span>
+    <p>Examples from the Goku dataset across all editing task categories.</p>
+</div>
+
+<nav class="nav-wrapper">
+    <div class="nav-tabs" id="navTabs"></div>
+</nav>
+
+<main class="container" id="mainContent"></main>
+
+<!-- ===== Part 2: Additional Model Results ===== -->
+<section class="full-section" id="additionalResults">
+    <div class="full-section-header">
+        <span class="section-number">2</span>
+        <h2>Additional Model Results</h2>
+        <span class="underline"></span>
+        <p>More qualitative results from our Goku-Edit model across diverse editing scenarios.</p>
+    </div>
+    <div class="container">
+        <div class="results-grid results-grid-2col" id="resultsGrid"></div>
+    </div>
+</section>
+
+<!-- ===== Part 3: Method Comparison ===== -->
+<section class="full-section" id="comparisonSection">
+    <div class="full-section-header">
+        <span class="section-number">3</span>
+        <h2>Comparison with Existing Methods</h2>
+        <span class="underline"></span>
+        <p>Side-by-side comparison of our method against state-of-the-art video editing approaches.</p>
+    </div>
+    <div class="container">
+        <div class="compare-wrapper">
+            <table class="compare-table" id="compareTable"></table>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <p>Goku: A Million-Scale Universal Dataset and Benchmark for Instruction-Based Video Editing</p>
+</footer>
+
+<script>
+const INST_ICON = '<span class="inst-icon"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></span>';
+
+/*
+ * Instructions are extracted from supp1.pdf pages 24-31.
+ * PDF layout order (top-to-bottom per page) is mapped to file numbering 1,2,3...
+ * If the count here doesn't match the folder, adjust the array accordingly.
+ */
+const CATEGORIES = [
+    {
+        id: 'multi',
+        label: 'Multi-Task',
+        color: '#FF5722',
+        desc: 'Multi-task editing data, generated through multiple turns of editing.',
+        count: 0,
+        hasRef: false,
+        isMulti: true,
+        instructions: [],
+        groups: [
+            { id: 1, steps: [0, 1, 2], labels: ['Original', 'Add a four-legged robot to the floor; this robot has a bright eye.' , 'Make the camera zoom in.'] },
+            { id: 2, steps: [0, 1, 2], labels: ['Original', 'Add a crystal ball to the stone.', 'Convert the video to an oil painting style.'] },
+            { id: 3, steps: [0, 1, 2], labels: ['Original', 'Add a squirrel next to the hand.', 'Transform the video to Western Cartoon Aesthetic style.'] },
+            { id: 5, steps: [0, 1, 2, 3], labels: ['Original', 'Replace the ping-pong paddle in the video with a white ping-pong ball.', 'Add a black clock next to the pen.', 'Change the tablecloth in the video to red and remove the white ping-pong ball moving in the background.'] }
+        ]
+    },
+    {
+        id: 'camera',
+        label: 'Structural Edit',
+        color: '#607D8B',
+        desc: 'Structural edits including camera movement and subject movement.',
+        hasRef: false,
+        items: [
+            { file: 1, inst: 'Make the camera pan left.' },
+            { file: 3, inst: 'Make the camera tilt up.' },
+            { file: 4, inst: 'Make the camera zoom out.' },
+            { file: 5, inst: 'Make the camera zoom in.' },
+            { file: 1, folder: 'subject', inst: 'Make the man in the black shirt lower his head.' },
+            { file: 2, folder: 'subject', inst: 'Make the man\'s eyes closed and slowly close his mouth.' },
+            { file: 4, folder: 'subject', inst: 'Make the cat change its posture from standing to sleeping.' },
+            { file: 5, folder: 'subject', inst: 'Make the chick jump happily.' },
+        ]
+    },
+    {
+        id: 'refadd',
+        label: 'Ref-Add',
+        color: '#00BCD4',
+        desc: 'Add referenced objects from an image into the video.',
+        hasRef: true,
+        items: [
+            { file: 1, inst: 'Add the referenced object into the scene. The referenced object is being pushed by a man.' },
+            { file: 2, inst: 'Add the referenced object into the scene. The red lamp is placed above the right files.' },
+            { file: 3, inst: 'Add the referenced object into the scene. The hot air balloon is flying in the sky between the clouds.' },
+            { file: 4, inst: 'Add the referenced object into the scene. The gray chair is placed next to the table lamp.' },
+        ]
+    },
+    {
+        id: 'refswap',
+        label: 'Ref-Swap',
+        color: '#E91E63',
+        desc: 'Swap objects in the video with referenced images.',
+        hasRef: true,
+        items: [
+            { file: 1, inst: 'Replace the Colorado potato beetle in the scene with a coccinellidae in the referenced image.' },
+            { file: 2, inst: 'Replace the white horse in the scene with a brown horse in the referenced image.' },
+            { file: 4, inst: 'Replace the blue-and-gold macaw in the scene with a scarlet macaw in the referenced image.' },
+            { file: 5, inst: 'Replace the whiskey in the scene with a Negroni in the referenced image.' },
+        ]
+    },
+    {
+        id: 'add',
+        label: 'Add',
+        color: '#4CAF50',
+        desc: 'Add new objects or elements to the video scene.',
+        hasRef: false,
+        items: [
+            { file: 1, inst: 'Add a glass with half a cup of water on the right side of the table.' },
+            { file: 2, inst: 'Add a large white cloud in the sky.' },
+            { file: 3, inst: 'Add a light on the roof of the car.' },
+            { file: 5, inst: 'Add a gray triangle decoration on the wall.' },
+        ]
+    },
+    {
+        id: 'remove',
+        label: 'Remove',
+        color: '#f44336',
+        desc: 'Remove existing objects or elements from the video scene.',
+        hasRef: false,
+        items: [
+            { file: 2, inst: 'Remove the green chair and the spray bottle from the lower center of the video.' },
+            { file: 3, inst: 'Remove the man in the cream-colored sweater on the left.' },
+            { file: 4, inst: 'Remove the man in the white T-shirt and grey pants on the left.' },
+            { file: 5, inst: 'Remove the woman leaning over from the right.' },
+        ]
+    },
+    {
+        id: 'swap and alter',
+        label: 'Swap & Alter',
+        color: '#FF9800',
+        desc: 'Swap or alter specific objects and attributes in the video.',
+        hasRef: false,
+        items: [
+            { file: 1, inst: 'Replace the woman with one wearing a red scarf and this black coat.' },
+            { file: 2, inst: 'Alter the headphones on the woman\'s head to white.' },
+            { file: 3, inst: "Alter the woman's red top to a light blue top." },
+            { file: 4, inst: 'Turn the ocean into a sea of clouds in the background.' },
+            { file: 5, inst: 'Replace the red brick walls with gray stone walls.' },
+            { file: 6, inst: 'Replace the gray beer bottle on the left with a green beer bottle.' },
+        ]
+    },
+    {
+        id: 'style',
+        label: 'Style',
+        color: '#9C27B0',
+        desc: 'Transfer or modify the visual style of the entire video.',
+        hasRef: false,
+        items: [
+            { file: 1, inst: 'Transform the entire scene into urban sketching style.' },
+            { file: 2, inst: 'Transform the entire scene into Oil Painting style.' },
+            { file: 3, inst: 'Transform the entire scene into Pop Art.' },
+            { file: 6, inst: 'Transform the entire scene into Pixar style.' },
+        ]
+    },
+];
+
+const stepColors = ['#f7971e', '#e44d26', '#d84315', '#bf360c', '#ff8f00'];
+
+function buildNavTabs() {
+    const nav = document.getElementById('navTabs');
+    CATEGORIES.forEach((cat, i) => {
+        const tab = document.createElement('button');
+        tab.className = 'nav-tab' + (i === 0 ? ' active' : '');
+        tab.dataset.cat = cat.id;
+        tab.textContent = cat.label;
+        tab.style.setProperty('--tab-color', cat.color);
+        tab.addEventListener('click', () => switchCategory(cat.id));
+        nav.appendChild(tab);
+    });
+}
+
+function switchCategory(catId) {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelector(`.nav-tab[data-cat="${catId}"]`).classList.add('active');
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById('section-' + catId.replace(/ /g, '-')).classList.add('active');
+}
+
+function buildSections() {
+    const main = document.getElementById('mainContent');
+
+    CATEGORIES.forEach((cat, idx) => {
+        const section = document.createElement('section');
+        section.className = 'section' + (idx === 0 ? ' active' : '');
+        section.id = 'section-' + cat.id.replace(/ /g, '-');
+
+        let html = `
+            <div class="section-header">
+                <span class="category-badge" style="background:${cat.color}">${cat.label}</span>
+                <h2 style="color:${cat.color}">${cat.label} Editing</h2>
+                <style>.section.active #section-${cat.id.replace(/ /g, '-')} h2::after { background: ${cat.color}; }</style>
+                <p>${cat.desc}</p>
+            </div>
+        `;
+
+        if (cat.isMulti) {
+            html += buildMultiSection(cat);
+        } else {
+            html += buildPairSection(cat);
+        }
+
+        section.innerHTML = html;
+        main.appendChild(section);
+    });
+}
+
+function buildPairSection(cat) {
+    const items = cat.items || [];
+    let html = '<div class="pair-grid">';
+    items.forEach(item => {
+        const i = item.file;
+        const folder = item.folder || cat.id;
+        const srcPath = `dataset/${folder}/source/${i}.mp4`;
+        const editPath = `dataset/${folder}/edit/${i}.mp4`;
+        const inst = item.inst || '';
+
+        const instBar = inst ? `
+            <div class="instruction-bar">
+                ${INST_ICON}
+                <span class="instruction-text">"${inst}"</span>
+            </div>` : '';
+
+        if (cat.hasRef) {
+            const refPath = `dataset/${folder}/image/${i}.png`;
+            html += `
+                <div class="edit-pair">
+                    <div class="pair-videos has-ref">
+                        <div class="video-cell">
+                            <span class="video-label source">Source</span>
+                            <video data-src="${srcPath}" loop muted playsinline preload="none"></video>
+                        </div>
+                        <div class="video-cell">
+                            <span class="video-label ref">Reference</span>
+                            <img src="${refPath}" alt="reference">
+                        </div>
+                        <div class="video-cell">
+                            <span class="video-label edit">Edited</span>
+                            <video data-src="${editPath}" loop muted playsinline preload="none"></video>
+                        </div>
+                    </div>
+                    ${instBar}
+                </div>
+            `;
+        } else {
+            html += `
+                <div class="edit-pair">
+                    <div class="pair-videos">
+                        <div class="video-cell">
+                            <span class="video-label source">Source</span>
+                            <video data-src="${srcPath}" loop muted playsinline preload="none"></video>
+                        </div>
+                        <div class="video-cell">
+                            <span class="video-label edit">Edited</span>
+                            <video data-src="${editPath}" loop muted playsinline preload="none"></video>
+                        </div>
+                        <div class="arrow-divider">
+                            <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                        </div>
+                    </div>
+                    ${instBar}
+                </div>
+            `;
+        }
+    });
+    html += '</div>';
+    return html;
+}
+
+function buildMultiSection(cat) {
+    let html = '<div class="multi-grid">';
+    cat.groups.forEach(group => {
+        html += `
+            <div class="multi-group">
+                <div class="multi-group-header">
+                    <span>Sequence #${group.id}</span>
+                    <span class="step-badge" style="background:${cat.color}">${group.steps.length-1} steps</span>
+                </div>
+                <div class="multi-video-list">
+        `;
+        group.steps.forEach((step, si) => {
+            const videoPath = `dataset/multi/${group.id}-${step}.mp4`;
+            const label = (group.labels && group.labels[si]) ? group.labels[si] : (si === 0 ? 'Original' : `Edit #${si}`);
+            const shortLabel = si === 0 ? 'Original' : `Step ${si}`;
+            html += `
+                <div class="multi-video-item">
+                    <span class="multi-step-label" style="background:${stepColors[si % stepColors.length]}">${shortLabel}</span>
+                    <video data-src="${videoPath}" loop muted playsinline preload="none"></video>
+                </div>
+                ${si > 0 ? `<div style="padding:2px 12px 6px;font-size:0.78rem;line-height:1.4;"><span class="instruction-text">"${label}"</span></div>` : ''}
+            `;
+        });
+        html += '</div></div>';
+    });
+    html += '</div>';
+    return html;
+}
+
+/* ===== Additional Results (additional_results/1..16, each folder has source + edit mp4) ===== */
+const ADDITIONAL_CASES = [
+    { id: 1,  src: '000000039150_4863239_000000_000249.mp4', edit: '000000039150_4863239_000000_000249_gen4_20251102_114936_Replace the water cup on the table with a pot of flowers, and add a toy car to the right side of the table.mp4', instruction: 'Replace the water cup on the table with a pot of flowers, and add a toy car to the right side of the table.', single: false },
+    { id: 2,  src: '000000038680_4842666_000250_000499.mp4', edit: '000000038680_4842666_000250_000499_gen4_20251101_173807_Delete the milk bottle in the hand, and change the background to a beach.mp4', instruction: 'Delete the milk bottle in the hand, and change the background to a beach.', single: false },
+    { id: 3,  src: '000000040054_4891796_000000_000289.mp4', edit: '000000040054_4891796_000000_000289_gen4_20251102_114936_Delete the bee in the picture, and change the purple flowers to yellow flowers.mp4', instruction: 'Delete the bee in the picture, and change the purple flowers to yellow flowers.', single: false },
+    { id: 4,  src: '000000040142_4899607_000000_000239.mp4', edit: '000000040142_4899607_000000_000239_gen4_20251102_114936_Add an oil painting on the wall, and transform the entire scene into an Impressionist style.mp4', instruction: 'Add an oil painting on the wall, and transform the entire scene into an Impressionist style.', single: false },
+    { id: 6,  src: '6dc5f9ea30075ccd6e3af3102f893962d9791df931d4d2ed3e3beee8_left.mp4', edit: '6dc5f9ea30075ccd6e3af3102f893962d9791df931d4d2ed3e3beee8_right.mp4', instruction: 'Transform the entire scene into a pencil sketch style, converting the realistic tabby cat into a detailed black-and-white pencil drawing with fine shading and line work.', single: false },
+    { id: 7,  src: '000000023312_4265083_000232_000405.mp4', edit: '000000023312_4265083_000232_000405 2.mp4', instruction: 'Change the brown coats worn by the three women to bright red coats, while keeping the rest of the scene and their poses unchanged.', single: false },
+    { id: 8,  src: '000000023890_4288006_000540_000779.mp4', edit: '000000023890_4288006_000540_000779 2.mp4', instruction: 'Replace the honeybee on the yellow dandelion flower with a small blue bird perching on the petals, while preserving the flower and the blurred green background.', single: false },
+    { id: 9,  src: '000000023271_4264888_000232_000521.mp4', edit: '12f3ee23ca5c97ef0c475feaceb71de964d6fc9b7bc9293741008d8f.mp4', instruction: 'Replace the white facial mask on the woman\'s face with colorful abstract face paint in bold red, blue, yellow, and black, inspired by Pop Art style.', single: false },
+    { id: 10,  src: 'video_0.mp4', edit: 'change_the_lion_to_a_tiger_seed1836951228.mp4', instruction: 'Change the lion to a tiger.', single: false },
+    { id: 11,  src: '000000019299_4109335_000000_000249.mp4', edit: '000000019299_4109335_000000_000249_gen4_20251104_144559_add a hat on the woman\'s head.mp4', instruction: 'Add a hat on the woman\'s head.', single: false },
+    { id: 12,  src: '11.mp4', edit: 'video0.mp4', instruction: 'Make the camera pan right, while keeping the man and the tropical garden background unchanged.', single: false },
+    { id: 13,  src: '000000024187_4309716_000000_000229.mp4', edit: '000000024187_4309716_000000_000229 2.mp4', instruction: 'Replace the gray opossum crawling on the roof with a red fox, preserving the same pose, movement, and surrounding environment.', single: false },
+    { id: 14,  src: '000000002571_1238852_000403_000609.mp4', edit: '000000002571_1238852_000403_000609_gen4_20251103_133353_Delete the bear in the middle of the screen.mp4', instruction: 'Delete the bear in the middle of the screen.', single: false },
+    { id: 15,  src: '1b2cd6185b3afa86dc7d1e626600a9c37572bc38bc81b439a965f9ec_left.mp4', edit: '1b2cd6185b3afa86dc7d1e626600a9c37572bc38bc81b439a965f9ec_right.mp4', instruction: 'Change the dark marble bar countertop to a clean white surface, while keeping the bartender, cocktail glass, and other objects on the counter intact.', single: false },
+    { id: 16,  src: '2f31d2f8503f323d97bf6aa52b5323cc2811b40fdb54a23d4454abd1_left.mp4', edit: '2f31d2f8503f323d97bf6aa52b5323cc2811b40fdb54a23d4454abd1_right.mp4', instruction: 'Transform the entire scene of pouring milk into a glass cup into a vivid oil painting style with rich warm tones and visible brushstroke textures.', single: false },
+    { id: 17,  src: '15a76b887a5aacd52dec239c348da83c22da37cd8afe10f9919852cf_left.mp4', edit: '15a76b887a5aacd52dec239c348da83c22da37cd8afe10f9919852cf_right.mp4', instruction: 'Transform the entire scene of a butterfly on a blue flower into a colorful comic illustration style with bold outlines, flat colors, and a vibrant yellow background.', single: false },
+    { id: 18,  src: '72baa30d6332051ebd054dee39b5b375c5f92d2791abb1d23346f899_left.mp4', edit: '72baa30d6332051ebd054dee39b5b375c5f92d2791abb1d23346f899_right.mp4', instruction: 'Replace the plain studio background behind the couple with a lush green forest scene with golden sunlight streaming through the trees.', single: false },
+    { id: 19,  src: '77c6099f0f83ca3578081af8d86fd8bfa19d780a805ee76edd37970d_left.mp4', edit: '77c6099f0f83ca3578081af8d86fd8bfa19d780a805ee76edd37970d_right.mp4', instruction: 'Add a bright blue butterfly with black-edged wings landing on the bouquet of red roses being held in the hands.', single: false },
+    { id: 20,  src: '5409725cacc49cb1213f64e26817a139a30259d1cbca9cd7c8f14374_left.mp4', edit: '5409725cacc49cb1213f64e26817a139a30259d1cbca9cd7c8f14374_right.mp4', instruction: 'Add an open wooden treasure chest placed on the rocks next to the man standing on the mountain top.', single: false },
+    { id: 21,  src: 'af4a9f3e016390304df57ce0c04c87b6695a455b7df0dc9d616fcb76_left.mp4', edit: 'af4a9f3e016390304df57ce0c04c87b6695a455b7df0dc9d616fcb76_right.mp4', instruction: 'Remove the floor lamp on the right.', single: false },
+    { id: 22,  src: 'b0474d6728d9d95225cfcc9ca43cac27138484a106f7b434e3458652_left.mp4', edit: 'b0474d6728d9d95225cfcc9ca43cac27138484a106f7b434e3458652_right.mp4', instruction: 'Turn the grassy ground beneath the rabbit eating oranges into a reflective water surface, creating a mirror-like reflection of the scene.', single: false },
+    { id: 23,  src: 'ddc958010f4305be5f176236ffd1d515fd55d953b82e50d339b894f9_left.mp4', edit: 'ddc958010f4305be5f176236ffd1d515fd55d953b82e50d339b894f9_right.mp4', instruction: 'Make the dachshund puppy turn its head from facing the camera to looking toward the right side, while keeping its sitting pose and the indoor background unchanged.', single: false },
+    { id: 25,  src: 'f6ddfdcf21d5fdf4b9630c30f560f6896dc1a892b71db84481c9dbfd_left.mp4', edit: 'f6ddfdcf21d5fdf4b9630c30f560f6896dc1a892b71db84481c9dbfd_right.mp4', instruction: 'Change the bright orange cup on the beach to a dark brown cup, while keeping the sandy shore and ocean background intact.', single: false },
+    { id: 26,  src: '000000019587_4115162_000000_000249.mp4', edit: '000000019587_4115162_000000_000249_gen4_20251104_144559_add a dog lying on the sofa.mp4', instruction: 'Add a dog lying on the sofa.', single: false },
+    { id: 28,  src: '000000002574_1239487_000058_000231.mp4', edit: '000000002574_1239487_000058_000231_gen4_20251103_133353_Delete the flower on the left side of the screen.mp4', instruction: 'Delete the flower on the left side of the screen.', single: false },
+    { id: 29,  src: '2.mp4', edit: '3.mp4', instruction: 'Change the woman\'s light blue sweater to a red sweater, and add a white plumeria flower tucked behind her right ear.', single: false },
+    { id: 31,  src: '000000023178_4255513_000600_000799.mp4', edit: '000000023178_4255513_000600_000799_gen4_20251101_022241_Change the black clothes into white ones.mp4', instruction: 'Change the black clothes into white ones.', single: false },
+    { id: 32,  src: '1.mp4', edit: '2.mp4', image: 'image.png', instruction: 'Add the hat in the reference image on the two students\' heads, while keeping other elements unchanged.', single: false },
+];
+
+const ADDITIONAL_CASE_TAGS = {
+    1: ['Multi-Task', 'Add', 'Swap'],
+    2: ['Multi-Task', 'Remove', 'Swap'],
+    3: ['Multi-Task', 'Remove', 'Swap'],
+    4: ['Multi-Task', 'Add', 'Style Transfer'],
+    6: ['Appearance Edit', 'Style Transfer'],
+    7: ['Appearance Edit', 'Swap (multi-object)'],
+    8: ['Appearance Edit', 'Swap'],
+    9: ['Appearance Edit', 'Swap','Style Transfer'],
+    10: ['Appearance Edit', 'Swap'],
+    11: ['Appearance Edit', 'Add'],
+    12: ['Structural Edit', 'Camera Movement'],
+    13: ['Appearance Edit', 'Swap'],
+    14: ['Appearance Edit', 'Remove'],
+    15: ['Appearance Edit', 'Alter'],
+    16: ['Appearance Edit', 'Style Transfer'],
+    17: ['Appearance Edit', 'Style Transfer'],
+    18: ['Appearance Edit', 'Background Change'],
+    19: ['Appearance Edit', 'Add'],
+    20: ['Appearance Edit', 'Add'],
+    21: ['Appearance Edit', 'Remove'],
+    22: ['Appearance Edit', 'Swap'],
+    23: ['Structural Edit', 'Subject Movement'],
+    24: ['Appearance Edit', 'Swap'],
+    25: ['Appearance Edit', 'Swap'],
+    26: ['Appearance Edit', 'Add'],
+    28: ['Appearance Edit', 'Remove'],
+    29: ['Multi-Task', 'Add', 'Swap'],
+    31: ['Appearance Edit', 'Swap'],
+    32: ['Appearance Edit', 'Ref-Add'],
+};
+
+function buildAdditionalResults() {
+    const grid = document.getElementById('resultsGrid');
+    let html = '';
+    const orderedCases = ADDITIONAL_CASES
+        .map((c, index) => ({ c, index }))
+        .sort((a, b) => {
+            const getPriority = (id) => {
+                const tags = ADDITIONAL_CASE_TAGS[id] || [];
+                if (tags.includes('[Structural Edit]')) return 0;
+                if (tags.includes('[Multi-Task]')) return 1;
+                return 2;
+            };
+
+            const priorityDiff = getPriority(a.c.id) - getPriority(b.c.id);
+            return priorityDiff !== 0 ? priorityDiff : a.index - b.index;
+        })
+        .map(item => item.c);
+
+    orderedCases.forEach((c) => {
+        const editPath = `additional_results/${c.id}/${encodeURIComponent(c.edit)}`;
+        const instText = c.instruction || 'Instruction to be added';
+        const tags = ADDITIONAL_CASE_TAGS[c.id] || [`[Case ${c.id} 标签1]`, `[Case ${c.id} 标签2]`];
+        const instBar = `
+            <div class="instruction-bar">
+                ${INST_ICON}
+                <span class="instruction-text">"${instText}"</span>
+            </div>`;
+        const tagBar = `
+            <div class="result-tags">
+                ${tags.map(tag => `<span class="result-tag ${getTagColorClass(tag)}">${tag}</span>`).join('')}
+            </div>`;
+
+        if (c.single || !c.src) {
+            html += `
+                <div class="result-card">
+                    <div class="video-area" style="border-radius:16px 16px 0 0;background:#000;">
+                        <span class="video-label edit">Result</span>
+                        <video data-src="${editPath}" loop muted playsinline preload="none"></video>
+                    </div>
+                    ${instBar}
+                    ${tagBar}
+                </div>`;
+        } else {
+            const srcPath = `additional_results/${c.id}/${encodeURIComponent(c.src)}`;
+            if (c.image) {
+                const imagePath = `additional_results/${c.id}/${encodeURIComponent(c.image)}`;
+                html += `
+                <div class="result-card">
+                    <div class="video-area">
+                        <div class="pair-videos has-ref">
+                            <div class="video-cell">
+                                <span class="video-label source">Source</span>
+                                <video data-src="${srcPath}" loop muted playsinline preload="none"></video>
+                            </div>
+                            <div class="video-cell">
+                                <span class="video-label ref">Reference</span>
+                                <img src="${imagePath}" alt="reference">
+                            </div>
+                            <div class="video-cell">
+                                <span class="video-label edit">Edited</span>
+                                <video data-src="${editPath}" loop muted playsinline preload="none"></video>
+                            </div>
+                        </div>
+                    </div>
+                    ${instBar}
+                    ${tagBar}
+                </div>`;
+            } else {
+                html += `
+                <div class="result-card">
+                    <div class="video-area">
+                        <div class="pair-videos" style="height:100%;">
+                            <div class="video-cell">
+                                <span class="video-label source">Source</span>
+                                <video data-src="${srcPath}" loop muted playsinline preload="none"></video>
+                            </div>
+                            <div class="video-cell">
+                                <span class="video-label edit">Edited</span>
+                                <video data-src="${editPath}" loop muted playsinline preload="none"></video>
+                            </div>
+                            <div class="arrow-divider">
+                                <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    ${instBar}
+                    ${tagBar}
+                </div>`;
+            }
+        }
+    });
+    grid.innerHTML = html;
+}
+
+/* ===== Method Comparison ===== */
+const METHODS = [
+    { id: 'source',      label: 'Source',     color: '#9E9E9E', isSource: true, fmt: '{i}.mp4' },
+    { id: '1_insv2v',    label: 'InsV2V',     color: '#78909C', fmt: '{i}_resize.mp4' },
+    { id: '3_insvie',    label: 'InsVIE',     color: '#7E57C2', fmt: '{i}_resize.mp4' },
+    { id: '5_omniv2v',   label: 'OmniVideo',    color: '#42A5F5', fmt: '{i}_resize.mp4' },
+    { id: '6_lucy',      label: 'Lucy',        color: '#EF5350', fmt: '{i}.mp4' },
+    { id: '7_ours',      label: 'Ours',        color: '#e44d26', isOurs: true, fmt: '{i}.mp4' },
+];
+const COMPARE_COUNT = 7;
+const COMPARE_INSTRUCTIONS = {
+    1: 'Make the dachshund puppy turn its head from facing the camera to looking toward the right side, while keeping its sitting pose and the indoor curtain background unchanged.',
+    2: 'Make the camera pan right, while keeping the man and the tropical garden background unchanged.',
+    3: 'Remove all the clouds from the sky and change it to a clear sunset gradient sky, while keeping the cows and the fenced pasture in the foreground unchanged.',
+    4: "Change the woman's curly hair to long straight hair with brown highlights, while keeping the bridge background and her black outfit unchanged.",
+    5: 'Remove the red cap from the person in the center of the crowd, while keeping the rest of the marching scene unchanged.',
+    6: 'Transform the entire scene of guinea pigs eating grass into a Japanese watercolor illustration style with soft warm tones and delicate brushwork.',
+    7: "Transform the scene of a Pomeranian sitting on the white sofa into a 2D cartoon style, and add a yellow baseball cap on the dog's head.",
+};
+const COMPARE_LABELS = {
+    1: 'Structural Edit',
+    2: 'Structural Edit',
+    3: 'Appearance Edit',
+    4: 'Appearance Edit',
+    5: 'Appearance Edit',
+    6: 'Appearance Edit',
+    7: 'Multi-Task',
+};
+const COMPARE_ORDER = [7, 1, 2, 3, 4, 5, 6];
+
+function getTagColorClass(tag) {
+    if (tag === 'Appearance Edit') return 'tag-appearance';
+    if (tag === 'Multi-Task') return 'tag-multi';
+    if (tag === 'Structural Edit') return 'tag-structural';
+    return '';
+}
+
+function buildComparisonTable() {
+    const table = document.getElementById('compareTable');
+    const colCount = METHODS.length + 1;
+
+    let theadHtml = '<thead><tr><th class="idx-header">#</th>';
+    METHODS.forEach(m => {
+        const cls = m.isOurs ? 'method-header ours-header' : (m.isSource ? 'method-header source-header' : 'method-header');
+        const style = (m.isOurs || m.isSource) ? '' : 'background:' + m.color;
+        theadHtml += `<th class="${cls}"><span class="method-badge" style="${style}">${m.label}</span></th>`;
+    });
+    theadHtml += '</tr></thead>';
+
+    let tbodyHtml = '<tbody>';
+    COMPARE_ORDER.forEach((caseId, index) => {
+        tbodyHtml += `<tr><td class="idx-cell">${index + 1}</td>`;
+        METHODS.forEach(m => {
+            const cls = m.isOurs ? 'ours-cell' : (m.isSource ? 'source-cell' : '');
+            const filename = (m.fmt || '{i}_resize.mp4').replace('{i}', caseId);
+            tbodyHtml += `
+                <td class="${cls}">
+                    <div class="compare-video-wrap">
+                        <video data-src="compare/${m.id}/${filename}" loop muted playsinline preload="none"></video>
+                    </div>
+                </td>`;
+        });
+        tbodyHtml += '</tr>';
+        const inst = COMPARE_INSTRUCTIONS[caseId];
+        const label = COMPARE_LABELS[caseId];
+        if (inst) {
+            tbodyHtml += `<tr class="compare-inst-row"><td colspan="${colCount}" class="compare-inst-cell">
+                <div class="instruction-bar">
+                    ${INST_ICON}
+                    ${label ? `<span class="result-tag compare-inline-tag ${getTagColorClass(label)}">${label}</span>` : ''}
+                    <span class="instruction-text">"${inst}"</span>
+                </div>
+            </td></tr>`;
+        }
+    });
+    tbodyHtml += '</tbody>';
+
+    table.innerHTML = theadHtml + tbodyHtml;
+}
+
+buildNavTabs();
+buildSections();
+buildAdditionalResults();
+buildComparisonTable();
+
+const videoObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+            if (!video.src && video.dataset.src) {
+                video.src = video.dataset.src;
+            }
+            video.play().catch(() => {});
+        } else {
+            video.pause();
+        }
+    });
+}, { rootMargin: '200px' });
+
+document.querySelectorAll('video[data-src]').forEach(v => videoObserver.observe(v));
+</script>
+
+</body>
+</html>
